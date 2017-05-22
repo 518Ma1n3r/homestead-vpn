@@ -1,0 +1,16 @@
+stacks:
+  us-east-1:
+    homestead-vpc:
+      template: homestead-vpc.yaml
+    openvpn-stack:
+      template: openvpn-stack.yaml
+      tags:
+        env: openvpn
+    pihole-stack:
+      template: pihole-stack.yaml
+      tags:
+        env: pi-hole
+    cf-service:
+      template: cf-service.yaml
+    stack-deploy:
+      template: stack-deploy.yaml

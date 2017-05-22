@@ -1,0 +1,43 @@
+---
+AWSTemplateFormatVersion: "2010-09-09"
+
+Description: "Template to create role to be used as a Cloudformation service role"
+
+Resources:
+  cfServiceRole:
+    Type: "AWS::IAM::Role"
+    Properties:
+      RoleName: cf-service
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          -
+            Effect: "Allow"
+            Principal:
+              Service:
+                - cloudformation.amazonaws.com
+            Action:
+              - sts:AssumeRole
+      Path: "/service/"
+
+
+  cfServiceRolePolicy:
+    DependsOn:
+      - cfServiceRole
+    Type: "AWS::IAM::Policy"
+    Properties:
+      PolicyName: "cf-service-role-policy"
+      PolicyDocument:
+              Statement:
+              - Effect: Allow
+                Action:
+                - ec2:*
+                - elasticloadbalancing:*
+                - logs:*
+                Resource:
+                - !Join [':', ["arn:aws:ec2", !Ref 'AWS::Region', !Ref 'AWS::AccountId', "*"]]
+                - !Join [':', ["arn:aws:elasticloadbalancing", !Ref 'AWS::Region', !Ref 'AWS::AccountId', "*"]]
+                - !Join [':', ["arn:aws:logs", !Ref 'AWS::Region', !Ref 'AWS::AccountId', "*"]]
+
+      Roles:
+        - Ref: cfServiceRole

@@ -1,0 +1,11 @@
+# Add parameters here:
+# param1: value1
+# param2: value2
+VPCCIDR: 10.10
+TagPrefixer: homestead
+InstanceSize: t2.micro
+OpenVPNASAdminUser: vpnusr
+SSMSecretString: vpnusr.secret
+VPCFlowLogRetention: 1
+OpenUse: NO
+OpenVPNASAccessIP: 74.76.175.178/32
